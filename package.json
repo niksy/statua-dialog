@@ -1,6 +1,6 @@
 {
   "name": "kist-dialog",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple dialog component.",
   "main": "index.js",
   "author": "Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com/)",
