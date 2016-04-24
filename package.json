@@ -15,6 +15,9 @@
     "test": "eslint index.js && gulp test",
     "posttest": "gulp cleanup"
   },
+  "dependencies": {
+    "jquery": "^1.12.3"
+  },
   "devDependencies": {
     "browserify": "^13.0.0",
     "del": "^2.2.0",
@@ -38,8 +41,5 @@
   "bugs": {
     "url": "https://github.com/niksy/kist-dialog/issues"
   },
-  "homepage": "https://github.com/niksy/kist-dialog#readme",
-  "dependencies": {
-    "jquery": "^1.12.3"
-  }
+  "homepage": "https://github.com/niksy/kist-dialog#readme"
 }
