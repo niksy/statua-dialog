@@ -12,6 +12,10 @@ var modal = dialog({
 	onClose: function ( $dialog, returnValue ) {
 		console.log('Dialog close');
 		console.info(returnValue);
+	},
+	onDestroy: function ( $dialog, returnValue ) {
+		console.log('Dialog destroy');
+		console.info(returnValue);
 	}
 });
 
@@ -25,7 +29,7 @@ $('body').on('click', '.show-outside-new-content', function () {
 });
 
 $('body').on('click', '.destroy-outside', function () {
-	modal.destroy();
+	modal.destroy(43);
 });
 
 $('body').on('click', '.show', function () {
@@ -42,5 +46,9 @@ $(document).on('dialogshow', function ( e, $dialog ) {
 });
 
 $(document).on('dialogclose', function ( e, $dialog, returnValue ) {
+	console.log(arguments);
+});
+
+$(document).on('dialogdestroy', function ( e, $dialog, returnValue ) {
 	console.log(arguments);
 });

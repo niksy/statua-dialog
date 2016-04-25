@@ -216,12 +216,6 @@ $.extend(Dialog.prototype, {
 		// Autofocus last focusable element inside dialog
 		this.$autoFocusEl.focus();
 
-		// On next tick, setup global events for this dialog
-		// (this seems like hackish solution, but it’s the only way I’ve found that
-		// doesn’t trigger click events automatically on showing)
-		// setTimeout($.proxy(function () {
-
-		// }, this), 0);
 		this.setupGlobalEvents();
 
 		this.options.onShow.call(this, this.$wrapper);
@@ -229,14 +223,11 @@ $.extend(Dialog.prototype, {
 
 	},
 
-	close: function ( returnValue ) {
-
-		destroyStateCheck(this);
-
-		if ( !this.state.visible ) {
-			return;
-		}
-		this.state.visible = false;
+	/**
+	 * @param  {String} type
+	 * @param  {Mixed} returnValue
+	 */
+	_handleClose: function ( type, returnValue ) {
 
 		this.$wrapper.attr('aria-hidden', true);
 		this.$wrapper.removeClass(this.options.classes.isVisible);
@@ -252,25 +243,55 @@ $.extend(Dialog.prototype, {
 			this.setReturnValue(returnValue);
 		}
 
-		this.options.onClose.call(this, this.$wrapper, this.returnValue);
-		this.$doc.trigger(meta.name + 'close', this.$wrapper, this.returnValue);
+		if ( type === 'close' ) {
+
+			this.options.onClose.call(this, this.$wrapper, this.returnValue);
+			this.$doc.trigger(meta.name + 'close', this.$wrapper, this.returnValue);
+
+		} else if ( type === 'destroy' ) {
+
+			this.options.onDestroy.call(this, this.$wrapper, this.returnValue);
+			this.$doc.trigger(meta.name + 'destroy', this.$wrapper, this.returnValue);
+
+		}
 
 		// Delete current return value after dialog element is closed
 		delete this.returnValue;
 
 	},
 
-	destroy: function () {
+	/**
+	 * @param  {Mixed} returnValue
+	 */
+	close: function ( returnValue ) {
+
+		destroyStateCheck(this);
+
+		if ( !this.state.visible ) {
+			return;
+		}
+		this.state.visible = false;
+
+		this._handleClose('close', returnValue);
+
+	},
+
+	/**
+	 * @param  {Mixed} returnValue
+	 */
+	destroy: function ( returnValue ) {
+
 		if ( this.state.destroyed ) {
 			return;
 		}
-		this.close();
-		this.options.onDestroy.call(this, this.$wrapper);
-		this.$doc.trigger(meta.name + 'destroy', this.$wrapper, this.returnValue);
+		this.state.destroyed = true;
+
+		this._handleClose('destroy', returnValue);
+
 		this.destroyDom();
 		this.destroyEvents();
 		this.destroyInstance();
-		this.state.destroyed = true;
+
 	},
 
 	defaults: {
