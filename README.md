@@ -5,7 +5,7 @@ Simple dialog component.
 Features:
 
 * Simple and flexible API
-* Best accessibility practices baked in
+* [Best][a11y-01] [accessibility][a11y-02] [practices][a11y-03] [baked in][a11y-04]
 
 ## Installation
 
@@ -117,9 +117,18 @@ Type: `Mixed`
 
 Return value when current dialog element is closed.
 
-### dialog.destroy()
+### dialog.destroy([returnValue])
 
 Destroys dialog element. Triggers `onDestroy` callback and corresponding events.
+
+## DOM API
+
+In addition to programmatic API, there is also DOM API through `data-` attributes. You can access it via `data-dialog-action` and corresponding value:
+
+* `[data-dialog-action="show"]`: triggers `dialog.show();`
+* `[data-dialog-action="close"]`: triggers `dialog.close();`
+* `[data-dialog-action="confirm"]`: triggers `dialog.destroy();` with `false` as return value, or, if `[data-dialog-action="prompt-input"]` is present, value of that form element
+* `[data-dialog-action="cancel"]`: triggers `dialog.destroy();` with `false` as return value, or, if `[data-dialog-action="prompt-input"]` is present, `null`
 
 ## Examples
 
@@ -168,3 +177,8 @@ Tested in IE8+ and all modern browsers.
 ## License
 
 MIT © [Ivan Nikolić](http://ivannikolic.com)
+
+[a11y-01]: https://drublic.de/archive/accessible-dialogs-modals/
+[a11y-02]: https://accessibility.oit.ncsu.edu/blog/2013/09/13/the-incredible-accessible-modal-dialog/
+[a11y-03]: https://www.nczonline.net/blog/2013/02/12/making-an-accessible-dialog-box/
+[a11y-04]: https://www.smashingmagazine.com/2014/09/making-modal-windows-better-for-everyone/

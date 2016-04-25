@@ -59,14 +59,21 @@ $.extend(Dialog.prototype, {
 
 		this.$wrapper.append(this.$content);
 
-		this.cacheAutofocusElement();
+		this.cacheDialogActionElements();
+		this.cacheAutofocusElements();
 		this.cacheTabbableElements();
 
 		this.$dialogContainer.append(this.$wrapper);
 
 	},
 
-	cacheAutofocusElement: function () {
+	cacheDialogActionElements: function () {
+		this.$dialogActionConfirm = this.$wrapper.find('[data-dialog-action="confirm"]');
+		this.$dialogActionCancel = this.$wrapper.find('[data-dialog-action="confirm"]');
+		this.$dialogActionPromptInput = this.$wrapper.find('[data-dialog-action="prompt-input"]');
+	},
+
+	cacheAutofocusElements: function () {
 
 		// Find last element with "autofocus" attribute
 		this.$autoFocusEl = this.$wrapper.find('[autofocus]').last();
@@ -108,6 +115,31 @@ $.extend(Dialog.prototype, {
 	},
 
 	setupEvents: function () {
+
+		var _show = $.proxy(function () { this.show(); }, this);
+		var _close = $.proxy(function () { this.close(); }, this);
+		var _destroy = $.proxy(function () { this.destroy(); }, this);
+		var _confirm = $.proxy(function () {
+			if ( this.$dialogActionPromptInput.length ) {
+				this.destroy(this.$dialogActionPromptInput.val());
+			} else {
+				this.destroy(true);
+			}
+		}, this);
+		var _cancel = $.proxy(function () {
+			if ( this.$dialogActionPromptInput.length ) {
+				this.destroy(null);
+			} else {
+				this.destroy(false);
+			}
+		}, this);
+
+		this.$wrapper.on('click' + this.ens, '[data-dialog-action="show"]', _show);
+		this.$wrapper.on('click' + this.ens, '[data-dialog-action="close"]', _close);
+		this.$wrapper.on('click' + this.ens, '[data-dialog-action="destroy"]', _destroy);
+		this.$wrapper.on('click' + this.ens, '[data-dialog-action="confirm"]', _confirm);
+		this.$wrapper.on('click' + this.ens, '[data-dialog-action="cancel"]', _cancel);
+
 	},
 
 	setupGlobalEvents: function () {
@@ -125,7 +157,13 @@ $.extend(Dialog.prototype, {
 				e.which === 27 ||
 				$target.hasClass(this.options.classes.dialogBackdrop)
 			) {
-				this.close();
+				if ( this.$dialogActionPromptInput.length ) {
+					this.destroy(null);
+				} else if ( this.$dialogActionCancel.length ) {
+					this.destroy(false);
+				} else {
+					this.close();
+				}
 			}
 
 		}, this));
@@ -177,6 +215,7 @@ $.extend(Dialog.prototype, {
 	},
 
 	destroyEvents: function () {
+		this.$wrapper.off(this.ens);
 		this.$content.off(this.ens);
 		this.destroyGlobalEvents();
 	},
@@ -186,7 +225,8 @@ $.extend(Dialog.prototype, {
 	 */
 	setContent: function ( content ) {
 		this.$wrapper.html(content);
-		this.cacheAutofocusElement();
+		this.cacheDialogActionElements();
+		this.cacheAutofocusElements();
 		this.cacheTabbableElements();
 	},
 
