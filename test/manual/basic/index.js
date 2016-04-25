@@ -1,8 +1,8 @@
 var $ = require('jquery');
-var dialog = require('../../index.js');
+var dialog = require('../../../index.js');
 
 var modal = dialog({
-	content: '<p>Foo?</p><p>Baz??</p><button type="button" class="show">Show</button><button type="button" class="close" autofocus="autofocus">Close</button>',
+	content: '<p>Dialog content</p><p>More dialog content</p>',
 	onCreate: function ( $dialog ) {
 		console.log('Dialog create');
 	},
@@ -19,26 +19,16 @@ var modal = dialog({
 	}
 });
 
-$('body').on('click', '.show-outside', function () {
+$('.show-outside').on('click', function () {
 	modal.show();
 });
 
-$('body').on('click', '.show-outside-new-content', function () {
-	modal.setContent('Custom content<button type="button" class="close">Close</button>');
-	modal.show();
-});
-
-$('body').on('click', '.destroy-outside', function () {
-	modal.destroy(43);
-});
-
-$('body').on('click', '.show', function () {
-	modal.show();
-});
-
-$('body').on('click', '.close', function () {
-	modal.setReturnValue(42);
+$('.close-outside').on('click', function () {
 	modal.close();
+});
+
+$('.destroy-outside').on('click', function () {
+	modal.destroy();
 });
 
 $(document).on('dialogshow', function ( e, $dialog ) {
