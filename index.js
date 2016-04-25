@@ -44,8 +44,8 @@ $.extend(Dialog.prototype, {
 	setupDom: function () {
 
 		this.$doc = $(document);
-		this.$html = $('html');
-		this.$body = $('body');
+		this.$dialogContainer = $(this.options.dialogContainer);
+		this.$backdropContainer = $(this.options.backdropContainer);
 		this.$lastFocusedEl = $();
 
 		this.$wrapper = $('<div />', {
@@ -62,7 +62,7 @@ $.extend(Dialog.prototype, {
 		this.cacheAutofocusElement();
 		this.cacheTabbableElements();
 
-		this.$body.append(this.$wrapper);
+		this.$dialogContainer.append(this.$wrapper);
 
 	},
 
@@ -209,7 +209,7 @@ $.extend(Dialog.prototype, {
 		this.$wrapper.attr('aria-hidden', false);
 		this.$wrapper.addClass(this.options.classes.isVisible);
 		this.$wrapper.removeClass(this.options.classes.isHidden);
-		this.$html.addClass(this.options.classes.dialogBackdrop);
+		this.$backdropContainer.addClass(this.options.classes.dialogBackdrop);
 
 		// Store last focused element so we can return focus prior to showing dialog
 		this.$lastFocusedEl = $(document.activeElement);
@@ -232,7 +232,7 @@ $.extend(Dialog.prototype, {
 		this.$wrapper.attr('aria-hidden', true);
 		this.$wrapper.removeClass(this.options.classes.isVisible);
 		this.$wrapper.addClass(this.options.classes.isHidden);
-		this.$html.removeClass(this.options.classes.dialogBackdrop);
+		this.$backdropContainer.removeClass(this.options.classes.dialogBackdrop);
 
 		// Return focus to last focused element prior to showing dialog
 		this.$lastFocusedEl.focus();
@@ -296,6 +296,8 @@ $.extend(Dialog.prototype, {
 
 	defaults: {
 		content: '',
+		dialogContainer: 'body',
+		backdropContainer: 'html',
 		onCreate: function () {},
 		onShow: function () {},
 		onClose: function () {},
@@ -310,15 +312,7 @@ $.extend(Dialog.prototype, {
 
 });
 
-module.exports = function ( _options ) {
-	var options = _options || {};
-	return new Dialog({
-		content: options.content,
-		onCreate: options.onCreate,
-		onShow: options.onShow,
-		onClose: options.onClose,
-		onDestroy: options.onDestroy,
-		classes: options.classes
-	});
+module.exports = function ( options ) {
+	return new Dialog(options || {});
 };
 module.exports.defaults = Dialog.prototype.defaults;

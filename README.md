@@ -36,6 +36,20 @@ Default: ` `
 
 Content which will be used for dialog element.
 
+##### dialogContainer
+
+Type: `String|Element|jQuery`  
+Default: `body`
+
+Element which will contain dialog.
+
+##### backdropContainer
+
+Type: `String|Element|jQuery`  
+Default: `html`
+
+Element which will contain backdrop (overlay) for dialog.
+
 ##### onCreate
 
 Type: `Function`  
