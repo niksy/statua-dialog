@@ -84,6 +84,13 @@ Default: `html`
 
 Element which will contain backdrop (overlay) for dialog.
 
+##### destroyOnClose
+
+Type: `Boolean`  
+Default: `false`
+
+By default, closing dialog will only add necessary HTML classes and change ARIA attributes. Set this option to `true` if you want to implicitly destroy dialog instance when calling `.close()` method.
+
 ##### onCreate
 
 Type: `Function`  

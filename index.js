@@ -312,7 +312,11 @@ $.extend(Dialog.prototype, {
 		}
 		this.state.visible = false;
 
-		this._handleClose('close', returnValue);
+		if ( this.options.destroyOnClose ) {
+			this.destroy(returnValue);
+		} else {
+			this._handleClose('close', returnValue);
+		}
 
 	},
 
@@ -338,6 +342,7 @@ $.extend(Dialog.prototype, {
 		content: '',
 		dialogContainer: 'body',
 		backdropContainer: 'html',
+		destroyOnClose: false,
 		onCreate: function () {},
 		onShow: function () {},
 		onClose: function () {},
