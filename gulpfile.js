@@ -1,10 +1,11 @@
 var path = require('path');
 var gulp = require('gulp');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
 var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
 var gutil = require('gulp-util');
+var debug = require('gulp-debug');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var del = require('del');
@@ -16,16 +17,17 @@ var es = require('event-stream');
 
 var args = minimist(process.argv.slice(2));
 
-gulp.task('cleanup', function () {
+gulp.task('test:cleanup', function () {
 	return del([
 		'./test-dist'
 	]);
 });
 
-gulp.task('markup', ['cleanup'], function () {
+gulp.task('test:markup', ['test:cleanup'], function () {
 	function bundle () {
 		return gulp.src('./test/manual/**/*.html')
-				.pipe(gulp.dest('./test-dist'));
+				.pipe(gulp.dest('./test-dist'))
+				.pipe(debug({ title: 'Markup:' }));
 	}
 	if ( args.watch ) {
 		gulp.watch(['./test/manual/**/*.html'], bundle);
@@ -33,10 +35,11 @@ gulp.task('markup', ['cleanup'], function () {
 	return bundle();
 });
 
-gulp.task('style', ['cleanup'], function () {
+gulp.task('test:style', ['test:cleanup'], function () {
 	function bundle () {
 		return gulp.src('./test/manual/assets/**/*.css')
-				.pipe(gulp.dest('./test-dist/assets'));
+				.pipe(gulp.dest('./test-dist/assets'))
+				.pipe(debug({ title: 'Style:' }));
 	}
 	if ( args.watch ) {
 		gulp.watch(['./test/manual/assets/**/*.css'], bundle);
@@ -44,10 +47,15 @@ gulp.task('style', ['cleanup'], function () {
 	return bundle();
 });
 
-gulp.task('script', ['cleanup'], function ( done ) {
+gulp.task('test:script', ['test:cleanup'], function ( done ) {
 
 	globby(['./test/manual/**/*.js'])
 	.then(function ( files ) {
+
+		function handleError ( msg ) {
+			gutil.log(gutil.colors.red(msg.message));
+			this.emit('end');
+		}
 
 		function task ( file ) {
 
@@ -63,21 +71,23 @@ gulp.task('script', ['cleanup'], function ( done ) {
 
 			function bundle () {
 				return b.bundle()
-					.on('error', function ( err ) {
-						gutil.log(err.message);
-					})
-					.pipe(plumber())
+					.on('error', handleError)
+					.pipe(plumber(handleError))
 					.pipe(source(path.basename(file)))
 					.pipe(buffer())
 					.pipe(sourcemaps.init({
 						loadMaps: true
 					}))
 					.pipe(sourcemaps.write())
+					.pipe(plumber.stop())
 					.pipe(gulp.dest(path.join('./test-dist', path.dirname(file).split(path.sep).pop())));
 			}
 
 			if ( args.watch ) {
-				b.on('update', bundle);
+				b.on('update', function () {
+					bundle()
+						.pipe(debug({ title: 'Script:' }));
+				});
 				b.on('log', gutil.log);
 			}
 
@@ -85,7 +95,10 @@ gulp.task('script', ['cleanup'], function ( done ) {
 
 		}
 
-		es.merge(files.map(task)).on('end', done);
+		es.merge(files.map(task))
+			.pipe(debug({ title: 'Script:' }))
+			.on('data', function () {})
+			.on('end', done);
 
 	})
 	.catch(function ( err ) {
@@ -94,7 +107,7 @@ gulp.task('script', ['cleanup'], function ( done ) {
 
 });
 
-gulp.task('test', ['cleanup', 'markup', 'style', 'script'], function () {
+gulp.task('test', ['test:cleanup', 'test:markup', 'test:style', 'test:script'], function () {
 	var port = 8000;
 	if ( args.watch ) {
 		ws({
@@ -105,6 +118,6 @@ gulp.task('test', ['cleanup', 'markup', 'style', 'script'], function () {
 				path: './test-dist'
 			}
 		}).listen(port);
-		opn('http://localhost:' + port);
+		opn('http://0.0.0.0:' + port);
 	}
 });
