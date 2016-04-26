@@ -7,13 +7,47 @@ Features:
 * Simple and flexible API
 * [Best][a11y-01] [accessibility][a11y-02] [practices][a11y-03] [baked in][a11y-04]
 
-## Installation
+## Install
 
 ```sh
 npm install kist-dialog --save
 ```
 
 ## Usage
+
+```js
+var dialog = require('kist-dialog');
+
+var modal = dialog({
+	content: '<p>Some content</p><button type="button" class="show">Show</button><button type="button" class="close" autofocus="autofocus">Close</button>',
+	onCreate: function ( $dialog ) {
+		// Dialog created!
+	},
+	onShow: function ( $dialog ) {
+		// Dialog shown!
+	},
+	onClose: function ( $dialog, returnValue ) {
+		// Dialog closed!
+	}
+});
+
+// Setting custom content
+modal.setContent('<p>New custom content</p><button type="button" class="close">Close</button>');
+
+// Show dialog
+modal.show();
+
+// Close dialog
+modal.close();
+
+// Destroy dialog
+modal.destroy();
+
+// Set return value
+modal.setReturnValue(42);
+```
+
+More usage examples are available in [manual tests](#test).
 
 ## API
 
@@ -127,44 +161,15 @@ In addition to programmatic API, there is also DOM API through `data-` attribute
 
 * `[data-dialog-action="show"]`: triggers `dialog.show();`
 * `[data-dialog-action="close"]`: triggers `dialog.close();`
+* `[data-dialog-action="destroy"]`: triggers `dialog.destroy();`
 * `[data-dialog-action="confirm"]`: triggers `dialog.destroy();` with `false` as return value, or, if `[data-dialog-action="prompt-input"]` is present, value of that form element
 * `[data-dialog-action="cancel"]`: triggers `dialog.destroy();` with `false` as return value, or, if `[data-dialog-action="prompt-input"]` is present, `null`
 
-## Examples
+## Caveats
 
-```js
-var dialog = require('kist-dialog');
+* If any element (or it’s parent) inside dialog is hidden with `display: none;`, tabbing order will be inconsistent and will make dialog tabbing behavior unpredictable (it will jump from dialog to first element outside dialog). To avoid this, it is better to hide elements with [technique which only visually hides element][visually-hidden].
 
-var modal = dialog({
-	content: '<p>Some content</p><button type="button" class="show">Show</button><button type="button" class="close" autofocus="autofocus">Close</button>',
-	onCreate: function ( $dialog ) {
-		// Dialog created!
-	},
-	onShow: function ( $dialog ) {
-		// Dialog shown!
-	},
-	onClose: function ( $dialog, returnValue ) {
-		// Dialog closed!
-	}
-});
-
-// Setting custom content
-modal.setContent('<p>New custom content</p><button type="button" class="close">Close</button>');
-
-// Show dialog
-modal.show();
-
-// Close dialog
-modal.close();
-
-// Destroy dialog
-modal.destroy();
-
-// Set return value
-modal.setReturnValue(42);
-```
-
-## Testing
+## Test
 
 Only manual tests are available.
 
@@ -182,3 +187,4 @@ MIT © [Ivan Nikolić](http://ivannikolic.com)
 [a11y-02]: https://accessibility.oit.ncsu.edu/blog/2013/09/13/the-incredible-accessible-modal-dialog/
 [a11y-03]: https://www.nczonline.net/blog/2013/02/12/making-an-accessible-dialog-box/
 [a11y-04]: https://www.smashingmagazine.com/2014/09/making-modal-windows-better-for-everyone/
+[visually-hidden]: http://bitsofco.de/hiding-elements-with-css/#position
