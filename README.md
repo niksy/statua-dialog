@@ -144,7 +144,7 @@ Default values:
 
 ```js
 {
-	wrapper: 'kist-Dialog',
+	element: 'kist-Dialog',
 	isVisible: 'is-visible',
 	isHidden: 'is-hidden',
 	dialogBackdrop: 'kist-DialogBackdrop'

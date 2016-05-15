@@ -49,7 +49,7 @@ $.extend(Dialog.prototype, {
 		this.$lastFocusedEl = $();
 
 		this.$el = $('<div />', {
-			'class': this.options.classes.wrapper,
+			'class': this.options.classes.element,
 			role: 'dialog',
 			'aria-hidden': true
 		});
@@ -74,7 +74,7 @@ $.extend(Dialog.prototype, {
 		// Find last element with "autofocus" attribute
 		this.$autoFocusEl = this.$el.find('[autofocus]').last();
 
-		// If that element doesn’t exist, use wrapper as programmably focusable element
+		// If that element doesn’t exist, use dialog element as programmably focusable element
 		if ( !this.$autoFocusEl.length ) {
 			this.$el.attr('tabindex', -1);
 			this.$autoFocusEl = this.$el;
@@ -96,7 +96,7 @@ $.extend(Dialog.prototype, {
 			'*[contenteditable]'
 		].join(','));
 
-		// If there are no tabbable elements, constrain tabbing to wrapper element
+		// If there are no tabbable elements, constrain tabbing to dialog element
 		if ( !this.$tabbableElements.length ) {
 			this.$tabbableElements = this.$el;
 		}
@@ -360,7 +360,7 @@ $.extend(Dialog.prototype, {
 		onClose: function () {},
 		onDestroy: function () {},
 		classes: {
-			wrapper: meta.ns.htmlClass,
+			element: meta.ns.htmlClass,
 			isVisible: 'is-visible',
 			isHidden: 'is-hidden',
 			dialogBackdrop: meta.ns.htmlClass + 'Backdrop'
