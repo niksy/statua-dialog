@@ -26,8 +26,8 @@ function Dialog ( options ) {
 	this.setupDom();
 	this.setupEvents();
 
-	this.options.onCreate.call(this, this.$wrapper);
-	this.$doc.trigger(meta.name + 'create', this.$wrapper);
+	this.options.onCreate.call(this, this.$el);
+	this.$doc.trigger(meta.name + 'create', this.$el);
 
 }
 
@@ -48,47 +48,47 @@ $.extend(Dialog.prototype, {
 		this.$backdropContainer = $(this.options.backdropContainer);
 		this.$lastFocusedEl = $();
 
-		this.$wrapper = $('<div />', {
+		this.$el = $('<div />', {
 			'class': this.options.classes.wrapper,
 			role: 'dialog',
 			'aria-hidden': true
 		});
 		this.$content = $(this.options.content);
 
-		this.$wrapper.addClass(this.options.classes.isHidden);
+		this.$el.addClass(this.options.classes.isHidden);
 
-		this.$wrapper.append(this.$content);
+		this.$el.append(this.$content);
 
 		this.cacheDialogActionElements();
 		this.cacheAutofocusElements();
 		this.cacheTabbableElements();
 
-		this.$dialogContainer.append(this.$wrapper);
+		this.$dialogContainer.append(this.$el);
 
 	},
 
 	cacheDialogActionElements: function () {
-		this.$dialogActionConfirm = this.$wrapper.find('[data-dialog-action="confirm"]');
-		this.$dialogActionCancel = this.$wrapper.find('[data-dialog-action="confirm"]');
-		this.$dialogActionPromptInput = this.$wrapper.find('[data-dialog-action="prompt-input"]');
+		this.$dialogActionConfirm = this.$el.find('[data-dialog-action="confirm"]');
+		this.$dialogActionCancel = this.$el.find('[data-dialog-action="confirm"]');
+		this.$dialogActionPromptInput = this.$el.find('[data-dialog-action="prompt-input"]');
 	},
 
 	cacheAutofocusElements: function () {
 
 		// Find last element with "autofocus" attribute
-		this.$autoFocusEl = this.$wrapper.find('[autofocus]').last();
+		this.$autoFocusEl = this.$el.find('[autofocus]').last();
 
 		// If that element doesn’t exist, use wrapper as programmably focusable element
 		if ( !this.$autoFocusEl.length ) {
-			this.$wrapper.attr('tabindex', -1);
-			this.$autoFocusEl = this.$wrapper;
+			this.$el.attr('tabindex', -1);
+			this.$autoFocusEl = this.$el;
 		}
 
 	},
 
 	cacheTabbableElements: function () {
 
-		this.$tabbableElements = this.$wrapper.find([
+		this.$tabbableElements = this.$el.find([
 			'a[href]',
 			'area[href]',
 			'input:not([disabled])',
@@ -102,7 +102,7 @@ $.extend(Dialog.prototype, {
 
 		// If there are no tabbable elements, constrain tabbing to wrapper element
 		if ( !this.$tabbableElements.length ) {
-			this.$tabbableElements = this.$wrapper;
+			this.$tabbableElements = this.$el;
 		}
 
 	},
@@ -110,7 +110,7 @@ $.extend(Dialog.prototype, {
 	destroyDom: function () {
 
 		this.$content.remove();
-		this.$wrapper.remove();
+		this.$el.remove();
 
 	},
 
@@ -134,11 +134,11 @@ $.extend(Dialog.prototype, {
 			}
 		}, this);
 
-		this.$wrapper.on('click' + this.ens, '[data-dialog-action="show"]', _show);
-		this.$wrapper.on('click' + this.ens, '[data-dialog-action="close"]', _close);
-		this.$wrapper.on('click' + this.ens, '[data-dialog-action="destroy"]', _destroy);
-		this.$wrapper.on('click' + this.ens, '[data-dialog-action="confirm"]', _confirm);
-		this.$wrapper.on('click' + this.ens, '[data-dialog-action="cancel"]', _cancel);
+		this.$el.on('click' + this.ens, '[data-dialog-action="show"]', _show);
+		this.$el.on('click' + this.ens, '[data-dialog-action="close"]', _close);
+		this.$el.on('click' + this.ens, '[data-dialog-action="destroy"]', _destroy);
+		this.$el.on('click' + this.ens, '[data-dialog-action="confirm"]', _confirm);
+		this.$el.on('click' + this.ens, '[data-dialog-action="cancel"]', _cancel);
 
 	},
 
@@ -155,7 +155,7 @@ $.extend(Dialog.prototype, {
 
 			if (
 				e.which === 27 ||
-				$target.closest(this.$wrapper).length === 0
+				$target.closest(this.$el).length === 0
 			) {
 				if ( this.$dialogActionPromptInput.length ) {
 					this.destroy(null);
@@ -173,7 +173,7 @@ $.extend(Dialog.prototype, {
 			var firstEl, lastEl;
 
 			// Not a TAB, ignore it...
-			if ( e.which !== 9 || this.$wrapper.hasClass('is-hidden') ) {
+			if ( e.which !== 9 || this.$el.hasClass('is-hidden') ) {
 				return;
 			}
 
@@ -215,7 +215,7 @@ $.extend(Dialog.prototype, {
 	},
 
 	destroyEvents: function () {
-		this.$wrapper.off(this.ens);
+		this.$el.off(this.ens);
 		this.$content.off(this.ens);
 		this.destroyGlobalEvents();
 	},
@@ -224,7 +224,7 @@ $.extend(Dialog.prototype, {
 	 * @param {Mixed} content
 	 */
 	setContent: function ( content ) {
-		this.$wrapper.html(content);
+		this.$el.html(content);
 		this.cacheDialogActionElements();
 		this.cacheAutofocusElements();
 		this.cacheTabbableElements();
@@ -246,9 +246,9 @@ $.extend(Dialog.prototype, {
 		}
 		this.state.visible = true;
 
-		this.$wrapper.attr('aria-hidden', false);
-		this.$wrapper.addClass(this.options.classes.isVisible);
-		this.$wrapper.removeClass(this.options.classes.isHidden);
+		this.$el.attr('aria-hidden', false);
+		this.$el.addClass(this.options.classes.isVisible);
+		this.$el.removeClass(this.options.classes.isHidden);
 		this.$backdropContainer.addClass(this.options.classes.dialogBackdrop);
 
 		// Store last focused element so we can return focus prior to showing dialog
@@ -262,8 +262,8 @@ $.extend(Dialog.prototype, {
 			this.setupGlobalEvents();
 		}, this), 0);
 
-		this.options.onShow.call(this, this.$wrapper);
-		this.$doc.trigger(meta.name + 'show', this.$wrapper);
+		this.options.onShow.call(this, this.$el);
+		this.$doc.trigger(meta.name + 'show', this.$el);
 
 	},
 
@@ -273,9 +273,9 @@ $.extend(Dialog.prototype, {
 	 */
 	_handleClose: function ( type, returnValue ) {
 
-		this.$wrapper.attr('aria-hidden', true);
-		this.$wrapper.removeClass(this.options.classes.isVisible);
-		this.$wrapper.addClass(this.options.classes.isHidden);
+		this.$el.attr('aria-hidden', true);
+		this.$el.removeClass(this.options.classes.isVisible);
+		this.$el.addClass(this.options.classes.isHidden);
 		this.$backdropContainer.removeClass(this.options.classes.dialogBackdrop);
 
 		// Return focus to last focused element prior to showing dialog
@@ -289,13 +289,13 @@ $.extend(Dialog.prototype, {
 
 		if ( type === 'close' ) {
 
-			this.options.onClose.call(this, this.$wrapper, this.returnValue);
-			this.$doc.trigger(meta.name + 'close', this.$wrapper, this.returnValue);
+			this.options.onClose.call(this, this.$el, this.returnValue);
+			this.$doc.trigger(meta.name + 'close', this.$el, this.returnValue);
 
 		} else if ( type === 'destroy' ) {
 
-			this.options.onDestroy.call(this, this.$wrapper, this.returnValue);
-			this.$doc.trigger(meta.name + 'destroy', this.$wrapper, this.returnValue);
+			this.options.onDestroy.call(this, this.$el, this.returnValue);
+			this.$doc.trigger(meta.name + 'destroy', this.$el, this.returnValue);
 
 		}
 
