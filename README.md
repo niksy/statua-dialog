@@ -89,7 +89,14 @@ Element which will contain backdrop (overlay) for dialog.
 Type: `Boolean`  
 Default: `false`
 
-By default, closing dialog will only add necessary HTML classes and change ARIA attributes. Set this option to `true` if you want to implicitly destroy dialog instance when calling `.close()` method.
+By default, closing dialog will only add necessary HTML classes and change ARIA attributes. Enable this option if you want to implicitly destroy dialog instance when calling `.close()` method or triggering click event on `[data-dialog-action="close"]` element.
+
+##### userInteraction
+
+Type: `Boolean`  
+Default: `false`
+
+Enable this option if you want to handle user interactions such as in standard [`window.confirm`][window-confirm] and [`window.prompt`][window-prompt] boxes with [special dialog actions](#user-interaction).
 
 ##### onCreate
 
@@ -169,7 +176,12 @@ In addition to programmatic API, there is also DOM API through `data-` attribute
 * `[data-dialog-action="show"]`: triggers `dialog.show();`
 * `[data-dialog-action="close"]`: triggers `dialog.close();`
 * `[data-dialog-action="destroy"]`: triggers `dialog.destroy();`
-* `[data-dialog-action="confirm"]`: triggers `dialog.destroy();` with `false` as return value, or, if `[data-dialog-action="prompt-input"]` is present, value of that form element
+
+### User interaction
+
+Enabling `userInteraction` option allows you to use additional dialog actions:
+
+* `[data-dialog-action="confirm"]`: triggers `dialog.destroy();` with `true` as return value, or, if `[data-dialog-action="prompt-input"]` is present, value of that form element
 * `[data-dialog-action="cancel"]`: triggers `dialog.destroy();` with `false` as return value, or, if `[data-dialog-action="prompt-input"]` is present, `null`
 
 ## Caveats
@@ -195,3 +207,5 @@ MIT © [Ivan Nikolić](http://ivannikolic.com)
 [a11y-03]: https://www.nczonline.net/blog/2013/02/12/making-an-accessible-dialog-box/
 [a11y-04]: https://www.smashingmagazine.com/2014/09/making-modal-windows-better-for-everyone/
 [visually-hidden]: http://bitsofco.de/hiding-elements-with-css/#position
+[window-confirm]: https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm
+[window-prompt]: https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt

@@ -3,6 +3,7 @@ var dialog = require('../../../index.js');
 
 var modal = dialog({
 	content: '<p>Content</p><button type="button" data-dialog-action="show">Show</button><button type="button" data-dialog-action="close">Close</button><button type="button" data-dialog-action="confirm">Confirm</button><button type="button" data-dialog-action="cancel">Cancel</button>',
+	userInteraction: true,
 	onClose: function () {
 		console.log(arguments);
 	},

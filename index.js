@@ -62,9 +62,11 @@ $.extend(Dialog.prototype, {
 	},
 
 	cacheDialogActionElements: function () {
-		this.$dialogActionConfirm = this.$el.find('[data-dialog-action="confirm"]');
-		this.$dialogActionCancel = this.$el.find('[data-dialog-action="confirm"]');
-		this.$dialogActionPromptInput = this.$el.find('[data-dialog-action="prompt-input"]');
+		if ( this.options.userInteraction ) {
+			this.$dialogActionConfirm = this.$el.find('[data-dialog-action="confirm"]');
+			this.$dialogActionCancel = this.$el.find('[data-dialog-action="cancel"]');
+			this.$dialogActionPromptInput = this.$el.find('[data-dialog-action="prompt-input"]');
+		}
 	},
 
 	cacheAutofocusElements: function () {
@@ -112,26 +114,34 @@ $.extend(Dialog.prototype, {
 		var _show = $.proxy(function () { this.show(); }, this);
 		var _close = $.proxy(function () { this.close(); }, this);
 		var _destroy = $.proxy(function () { this.destroy(); }, this);
-		var _confirm = $.proxy(function () {
-			if ( this.$dialogActionPromptInput.length ) {
-				this.destroy(this.$dialogActionPromptInput.val());
-			} else {
-				this.destroy(true);
-			}
-		}, this);
-		var _cancel = $.proxy(function () {
-			if ( this.$dialogActionPromptInput.length ) {
-				this.destroy(null);
-			} else {
-				this.destroy(false);
-			}
-		}, this);
+		var _confirm, _cancel;
+
 
 		this.$el.on('click' + this.ens, '[data-dialog-action="show"]', _show);
 		this.$el.on('click' + this.ens, '[data-dialog-action="close"]', _close);
 		this.$el.on('click' + this.ens, '[data-dialog-action="destroy"]', _destroy);
-		this.$el.on('click' + this.ens, '[data-dialog-action="confirm"]', _confirm);
-		this.$el.on('click' + this.ens, '[data-dialog-action="cancel"]', _cancel);
+
+		if ( this.options.userInteraction ) {
+
+			_confirm = $.proxy(function () {
+				if ( this.$dialogActionPromptInput.length ) {
+					this.destroy(this.$dialogActionPromptInput.val());
+				} else {
+					this.destroy(true);
+				}
+			}, this);
+			_cancel = $.proxy(function () {
+				if ( this.$dialogActionPromptInput.length ) {
+					this.destroy(null);
+				} else {
+					this.destroy(false);
+				}
+			}, this);
+
+			this.$el.on('click' + this.ens, '[data-dialog-action="confirm"]', _confirm);
+			this.$el.on('click' + this.ens, '[data-dialog-action="cancel"]', _cancel);
+
+		}
 
 	},
 
@@ -150,10 +160,12 @@ $.extend(Dialog.prototype, {
 				e.which === 27 ||
 				$target.closest(this.$el).length === 0
 			) {
-				if ( this.$dialogActionPromptInput.length ) {
-					this.destroy(null);
-				} else if ( this.$dialogActionCancel.length ) {
-					this.destroy(false);
+				if ( this.options.userInteraction ) {
+					if ( this.$dialogActionPromptInput.length ) {
+						this.destroy(null);
+					} else if ( this.$dialogActionCancel.length ) {
+						this.destroy(false);
+					}
 				} else {
 					this.close();
 				}
@@ -339,6 +351,7 @@ $.extend(Dialog.prototype, {
 		dialogContainer: 'body',
 		backdropContainer: 'html',
 		destroyOnClose: false,
+		userInteraction: false,
 		onCreate: function () {},
 		onShow: function () {},
 		onClose: function () {},
