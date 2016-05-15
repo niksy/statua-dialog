@@ -155,7 +155,7 @@ $.extend(Dialog.prototype, {
 
 			if (
 				e.which === 27 ||
-				$target.hasClass(this.options.classes.dialogBackdrop)
+				$target.closest(this.$wrapper).length === 0
 			) {
 				if ( this.$dialogActionPromptInput.length ) {
 					this.destroy(null);
@@ -172,8 +172,8 @@ $.extend(Dialog.prototype, {
 
 			var firstEl, lastEl;
 
+			// Not a TAB, ignore it...
 			if ( e.which !== 9 || this.$wrapper.hasClass('is-hidden') ) {
-				// Not a TAB, ignore it...
 				return;
 			}
 
@@ -256,7 +256,11 @@ $.extend(Dialog.prototype, {
 		// Autofocus last focusable element inside dialog
 		this.$autoFocusEl.focus();
 
-		this.setupGlobalEvents();
+		// Setup global events on next event loop
+		// (this is to handle early global event registration)
+		setTimeout($.proxy(function () {
+			this.setupGlobalEvents();
+		}, this), 0);
 
 		this.options.onShow.call(this, this.$wrapper);
 		this.$doc.trigger(meta.name + 'show', this.$wrapper);
