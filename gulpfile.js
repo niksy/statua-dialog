@@ -25,12 +25,12 @@ gulp.task('test:cleanup', function () {
 
 gulp.task('test:markup', ['test:cleanup'], function () {
 	function bundle () {
-		return gulp.src('./test/manual/**/*.html')
+		return gulp.src('./test/manual/suite/**/*.html')
 				.pipe(gulp.dest('./test-dist'))
 				.pipe(debug({ title: 'Markup:' }));
 	}
 	if ( args.watch ) {
-		gulp.watch(['./test/manual/**/*.html'], bundle);
+		gulp.watch(['./test/manual/suite/**/*.html'], bundle);
 	}
 	return bundle();
 });
@@ -49,7 +49,7 @@ gulp.task('test:style', ['test:cleanup'], function () {
 
 gulp.task('test:script', ['test:cleanup'], function ( done ) {
 
-	globby(['./test/manual/**/*.js'])
+	globby(['./test/manual/suite/**/*.js'])
 	.then(function ( files ) {
 
 		function handleError ( msg ) {

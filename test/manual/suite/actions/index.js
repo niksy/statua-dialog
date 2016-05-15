@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var dialog = require('../../../index.js');
+var dialog = require('../../../../index.js');
 
 var modal = dialog({
 	content: '<p>Dialog content</p><p>More dialog content</p><button type="button" class="show">Show</button><button type="button" class="close" autofocus="autofocus">Close with autofocus</button><button type="button" class="close-return-value">Close with return value</button><button type="button" class="destroy-return-value">Destroy with return value</button>',
@@ -32,7 +32,7 @@ $('body').on('click', '.close-return-value', function () {
 });
 
 $('body').on('click', '.destroy-return-value', function () {
-	modal.destroy(42);
+	modal.destroy(43);
 });
 
 $('.show-outside').on('click', function () {

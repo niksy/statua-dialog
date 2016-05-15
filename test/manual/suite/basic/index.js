@@ -1,9 +1,8 @@
 var $ = require('jquery');
-var dialog = require('../../../index.js');
+var dialog = require('../../../../index.js');
 
 var modal = dialog({
-	content: '<p>Dialog content</p><p>More dialog content</p><button type="button" class="close">Close</button>',
-	destroyOnClose: true,
+	content: '<p>Dialog content</p><p>More dialog content</p>',
 	onCreate: function ( $dialog ) {
 		console.log('Dialog create');
 	},
@@ -30,10 +29,6 @@ $('.close-outside').on('click', function () {
 
 $('.destroy-outside').on('click', function () {
 	modal.destroy();
-});
-
-$('body').on('click', '.close', function () {
-	modal.close();
 });
 
 $(document).on('dialogshow', function ( e, $dialog ) {

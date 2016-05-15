@@ -1,8 +1,8 @@
 var $ = require('jquery');
-var dialog = require('../../../index.js');
+var dialog = require('../../../../index.js');
 
 var modal = dialog({
-	content: '<p>Dialog content</p><p>More dialog content</p>',
+	content: 'Only text content',
 	onCreate: function ( $dialog ) {
 		console.log('Dialog create');
 	},

@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var dialog = require('../../../index.js');
+var dialog = require('../../../../index.js');
 
 var modal = dialog({
 	content: '<p>Content</p>',
