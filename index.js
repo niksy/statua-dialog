@@ -173,36 +173,39 @@ $.extend(Dialog.prototype, {
 
 		}, this));
 
+		// Handle tabbing through dialog elements
+		// https://gist.github.com/rodneyrehm/5901209
 		this.$doc.on('keydown' + this.ens, $.proxy(function ( e ) {
 
 			var firstEl, lastEl;
 
-			// Not a TAB, ignore it...
+			// Not a tab, ignore it
 			if ( e.which !== 9 || this.$el.hasClass('is-hidden') ) {
 				return;
 			}
 
 			// late grab of first/last element identification, because
 			// DOM might have changed since registering this helper.
-			// remember that DOMNodeList is a live view of the query
+			// DOMNodeList is a live view of the query
 			// (unlike jQuery's static list)
 			firstEl = this.$tabbableElements[0];
 			lastEl = this.$tabbableElements[this.$tabbableElements.length - 1];
 
+			// Loop around the end
 			if ( e.target === lastEl && !e.shiftKey ) {
-				// Loop around the end
 				firstEl.focus();
+
+			// Loop around the beginning
 			} else if ( e.target === firstEl && e.shiftKey ) {
-				// Loop around the beginning
 				lastEl.focus();
+
+			// Ignore tabs in between
 			} else {
-				// Ignore tabs in between
 				return;
 			}
 
-			// Prevent browser from handling these TABs
+			// Prevent browser from handling these tabs
 			e.preventDefault();
-			e.stopPropagation();
 
 		}, this));
 
