@@ -53,15 +53,9 @@ $.extend(Dialog.prototype, {
 			role: 'dialog',
 			'aria-hidden': true
 		});
-		this.$content = $(this.options.content);
-
 		this.$el.addClass(this.options.classes.isHidden);
 
-		this.$el.append(this.$content);
-
-		this.cacheDialogActionElements();
-		this.cacheAutofocusElements();
-		this.cacheTabbableElements();
+		this.setContent(this.options.content);
 
 		this.$dialogContainer.append(this.$el);
 
@@ -109,7 +103,6 @@ $.extend(Dialog.prototype, {
 
 	destroyDom: function () {
 
-		this.$content.remove();
 		this.$el.remove();
 
 	},
@@ -216,7 +209,6 @@ $.extend(Dialog.prototype, {
 
 	destroyEvents: function () {
 		this.$el.off(this.ens);
-		this.$content.off(this.ens);
 		this.destroyGlobalEvents();
 	},
 
