@@ -48,7 +48,7 @@ export default {
 		const id = count;
 		count = count + 1;
 		return {
-			internalHtmlClassNamespace: 'z-Dialog',
+			internalHtmlClassNamespace: 'statua-Dialog',
 			isHidden: true,
 			id: id
 		};
@@ -75,7 +75,7 @@ export default {
 	events: {
 		clickactionclose(node, callback) {
 			const handler = delegate(
-				'[data-z-dialog-action="close"]',
+				'[data-statua-dialog-action="close"]',
 				callback
 			);
 			node.addEventListener('click', handler, false);
@@ -138,7 +138,7 @@ export default {
 </script>
 
 <style>
-	[data-z-dialog-focus-guard][tabindex] {
+	[data-statua-dialog-focus-guard][tabindex] {
 		width: 1px;
 		height: 0px;
 		padding: 0px;
@@ -154,8 +154,8 @@ export default {
 	on:keydown="handleGlobalKeyboardEvent(event)"
 />
 <div class="{classNames.container}" ref:container class:is-hidden="isHidden">
-	<div data-z-dialog-focus-guard="true" tabindex="0"></div>
-	<div data-z-dialog-focus-guard="true" tabindex="1"></div>
+	<div data-statua-dialog-focus-guard="true" tabindex="0"></div>
+	<div data-statua-dialog-focus-guard="true" tabindex="1"></div>
 	<div class="{classNames.backdrop}" ref:backdrop>
 		<div
 			class="{classNames.content}"
@@ -168,5 +168,5 @@ export default {
 			{#if !isContentNode} {@html content} {/if}
 		</div>
 	</div>
-	<div data-z-dialog-focus-guard="true" tabindex="0"></div>
+	<div data-statua-dialog-focus-guard="true" tabindex="0"></div>
 </div>

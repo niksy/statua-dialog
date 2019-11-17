@@ -18,7 +18,7 @@ it('should create instance with string as content', function() {
 	});
 	instance.show();
 
-	assert.ok(nodesExist(['.z-Dialog-content[role="dialog"] .becky']));
+	assert.ok(nodesExist(['.statua-Dialog-content[role="dialog"] .becky']));
 
 	instance.destroy();
 });
@@ -32,7 +32,7 @@ it('should create instance with DOM node as content', function() {
 	});
 	instance.show();
 
-	assert.ok(nodesExist(['.z-Dialog-content[role="dialog"] .archie']));
+	assert.ok(nodesExist(['.statua-Dialog-content[role="dialog"] .archie']));
 
 	instance.destroy();
 });
@@ -52,13 +52,13 @@ it('should close instance when pressing Escape key', function() {
 	instance.show();
 
 	try {
-		assert.ok(nodesExist(['.z-Dialog-content[role="dialog"] .becky']));
+		assert.ok(nodesExist(['.statua-Dialog-content[role="dialog"] .becky']));
 
 		pressEscape(document.body);
 
 		assert.ok(
 			nodesExist([
-				'.z-Dialog.is-hidden .z-Dialog-content[role="dialog"] .becky'
+				'.statua-Dialog.is-hidden .statua-Dialog-content[role="dialog"] .becky'
 			])
 		);
 	} finally {
@@ -74,19 +74,19 @@ it('should close instance when clicking outside dialog', function() {
 	});
 	instance.show();
 
-	const element = document.querySelector('.z-Dialog');
-	const outsideElement = document.querySelector('.z-Dialog-backdrop');
+	const element = document.querySelector('.statua-Dialog');
+	const outsideElement = document.querySelector('.statua-Dialog-backdrop');
 
 	try {
 		mouseClick(element);
 
-		assert.ok(nodesExist(['.z-Dialog-content[role="dialog"] .becky']));
+		assert.ok(nodesExist(['.statua-Dialog-content[role="dialog"] .becky']));
 
 		mouseClick(outsideElement);
 
 		assert.ok(
 			nodesExist([
-				'.z-Dialog.is-hidden .z-Dialog-content[role="dialog"] .becky'
+				'.statua-Dialog.is-hidden .statua-Dialog-content[role="dialog"] .becky'
 			])
 		);
 	} finally {
@@ -94,7 +94,7 @@ it('should close instance when clicking outside dialog', function() {
 	}
 });
 
-it('should close instance when clicking on [data-z-dialog-action="close"]', function() {
+it('should close instance when clicking on [data-statua-dialog-action="close"]', function() {
 	const instance = fn({
 		content: /* HTML */ `
 			<div class="becky">
@@ -102,7 +102,7 @@ it('should close instance when clicking on [data-z-dialog-action="close"]', func
 				<button
 					type="button"
 					class="honey"
-					data-z-dialog-action="close"
+					data-statua-dialog-action="close"
 				>
 					honey
 				</button>
@@ -111,20 +111,20 @@ it('should close instance when clicking on [data-z-dialog-action="close"]', func
 	});
 	instance.show();
 
-	const element = document.querySelector('.z-Dialog');
+	const element = document.querySelector('.statua-Dialog');
 	const genericButton = document.querySelector('.molly');
 	const closeButton = document.querySelector('.honey');
 
 	try {
 		mouseClick(genericButton);
 
-		assert.ok(nodesExist(['.z-Dialog-content[role="dialog"] .becky']));
+		assert.ok(nodesExist(['.statua-Dialog-content[role="dialog"] .becky']));
 
 		mouseClick(closeButton);
 
 		assert.ok(
 			nodesExist([
-				'.z-Dialog.is-hidden .z-Dialog-content[role="dialog"] .becky'
+				'.statua-Dialog.is-hidden .statua-Dialog-content[role="dialog"] .becky'
 			])
 		);
 	} finally {
@@ -179,9 +179,9 @@ it('should cleanup instance on destroy', function() {
 	});
 	instance.show();
 
-	assert.ok(nodesExist(['.z-Dialog-content[role="dialog"] .becky']));
+	assert.ok(nodesExist(['.statua-Dialog-content[role="dialog"] .becky']));
 
 	instance.destroy();
 
-	assert.ok(!nodesExist(['.z-Dialog-content[role="dialog"] .becky']));
+	assert.ok(!nodesExist(['.statua-Dialog-content[role="dialog"] .becky']));
 });

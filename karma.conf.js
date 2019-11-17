@@ -26,7 +26,7 @@ if ( local ) {
 			username: process.env.BROWSER_STACK_USERNAME,
 			accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
 			startTunnel: true,
-			project: 'z-dialog',
+			project: '@statua/dialog',
 			name: 'Automated (Karma)',
 			build: 'Automated (Karma)'
 		},
@@ -36,7 +36,7 @@ if ( local ) {
 				browser: 'Chrome',
 				os: 'Windows',
 				'os_version': '7',
-				project: 'z-dialog',
+				project: '@statua/dialog',
 				build: 'Automated (Karma)',
 				name: 'Chrome'
 			},
@@ -45,7 +45,7 @@ if ( local ) {
 				browser: 'Firefox',
 				os: 'Windows',
 				'os_version': '7',
-				project: 'z-dialog',
+				project: '@statua/dialog',
 				build: 'Automated (Karma)',
 				name: 'Firefox'
 			},
@@ -55,7 +55,7 @@ if ( local ) {
 				'browser_version': '11',
 				os: 'Windows',
 				'os_version': '7',
-				project: 'z-dialog',
+				project: '@statua/dialog',
 				build: 'Automated (Karma)',
 				name: 'IE11'
 			},
@@ -128,7 +128,7 @@ module.exports = function ( baseConfig ) {
 			],
 			output: {
 				format: 'iife',
-				name: 'zDialog',
+				name: 'statuaDialog',
 				sourcemap: baseConfig.autoWatch ? false : 'inline', // Source map support has weird behavior in watch mode
 				intro: 'window.TYPED_ARRAY_SUPPORT = false;' // IE9
 			}

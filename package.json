@@ -1,5 +1,5 @@
 {
-  "name": "z-dialog",
+  "name": "@statua/dialog",
   "version": "0.0.0",
   "description": "Dialog component.",
   "main": "index.cjs.js",
@@ -88,6 +88,9 @@
   "engines": {
     "node": ">=8"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "accessible",
     "dialog",
@@ -96,10 +99,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/niksy/z-dialog.git"
+    "url": "git+https://github.com/niksy/statua-dialog.git"
   },
   "bugs": {
-    "url": "https://github.com/niksy/z-dialog/issues"
+    "url": "https://github.com/niksy/statua-dialog/issues"
   },
-  "homepage": "https://github.com/niksy/z-dialog#readme"
+  "homepage": "https://github.com/niksy/statua-dialog#readme"
 }

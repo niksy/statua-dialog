@@ -1,4 +1,4 @@
-# z-dialog
+# @statua/dialog
 
 [![Build Status][ci-img]][ci]
 [![BrowserStack Status][browserstack-img]][browserstack]
@@ -16,13 +16,13 @@ Features:
 ## Install
 
 ```sh
-npm install z-dialog --save
+npm install @statua/dialog --save
 ```
 
 ## Usage
 
 ```js
-import dialog from 'z-dialog';
+import dialog from '@statua/dialog';
 
 const instance = dialog({
 	content: `<p>Becky</p>`
@@ -89,7 +89,7 @@ Callback to run when dialog instance is closed.
 Type: `string`  
 Default: ` `
 
-HTML class namespace in addition to default one (`z-Dialog`).
+HTML class namespace in addition to default one (`statua-Dialog`).
 
 Useful if you want to create additional styling/functionality selector hook.
 
@@ -109,7 +109,7 @@ Destroy dialog instance.
 
 Dialog instance can be controlled with certain DOM attributes.
 
-### `[data-z-dialog-action="close"]`
+### `[data-statua-dialog-action="close"]`
 
 Closes closest dialog instance when clicking on element.
 
@@ -128,9 +128,9 @@ MIT © [Ivan Nikolić](http://ivannikolic.com)
 
 <!-- prettier-ignore-start -->
 
-[ci]: https://travis-ci.com/niksy/z-dialog
-[ci-img]: https://travis-ci.com/niksy/z-dialog.svg?branch=master
+[ci]: https://travis-ci.com/niksy/statua-dialog
+[ci-img]: https://travis-ci.com/niksy/statua-dialog.svg?branch=master
 [browserstack]: https://www.browserstack.com/
-[browserstack-img]: https://www.browserstack.com/automate/badge.svg?badge_key=MVVsbU5zaVZVUFMzNlhxRTR1OFVTZzNDYkdSNUxsM25mQThqeFZnQTgxMD0tLVBMVldpRlNaUCsvbFdSQU5zVnJiNUE9PQ==--0221eba3e4b920cc64460d01c5863becf218c09a
+[browserstack-img]: https://www.browserstack.com/automate/badge.svg?badge_key=TVpLaVUwTFVlVmZMbjZjaFlkZTJXQTRyb3pmVnVZdkEvVFNSTnQxWlFoYz0tLUpaeTFVUHZjaEV4ckVzTHQ1Wk01ekE9PQ==--125aa92b4fd002789ed9842e3882f334fb1df5ac
 
 <!-- prettier-ignore-end -->
