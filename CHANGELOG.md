@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+- `show` and `close` methods not calling `onShow` and `onClose` callback in all situations
+
 ## [1.0.0][] - 2019-11-18
 
 ### Added

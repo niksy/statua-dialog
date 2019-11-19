@@ -111,12 +111,16 @@ export default {
 			}
 		},
 		show() {
+			const { onShow } = this.get();
 			this.set({ isHidden: false });
 			this.lockFocus();
+			onShow();
 		},
 		close() {
+			const { onClose } = this.get();
 			this.set({ isHidden: true });
 			this.unlockFocus();
+			onClose();
 		},
 		lockFocus() {
 			const { id } = this.get();

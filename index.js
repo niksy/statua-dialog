@@ -20,18 +20,18 @@ export default (options = {}) => {
 			content,
 			htmlClassNamespace,
 			onCreate,
-			onDestroy
+			onDestroy,
+			onShow,
+			onClose
 		}
 	});
 
 	return {
 		show: () => {
 			instance.show();
-			onShow();
 		},
 		close: () => {
 			instance.close();
-			onClose();
 		},
 		destroy: () => {
 			instance.destroy();
