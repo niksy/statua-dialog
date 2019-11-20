@@ -9,6 +9,7 @@ Features:
 
 -   Best accessibility practices baked in
 -   Tab and focus lock on tabbable elements inside dialog
+-   Handles usual UX considerations such as closing on Escape key and clicking on dialog backdrop
 -   Flexible styling
 
 **[Try it now!](https://codesandbox.io/s/basic-example-k7zml)**
