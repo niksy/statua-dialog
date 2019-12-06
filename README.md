@@ -11,6 +11,8 @@ Features:
 -   Tab and focus lock on tabbable elements inside dialog
 -   Handles usual UX considerations such as closing on Escape key and clicking on dialog backdrop
 -   Flexible styling
+-   Sets `aria-hidden` on all sibling and ancestor elements except for the
+    currently active dialog which traps the virtual cursor inside the dialog
 
 **[Try it now!](https://codesandbox.io/s/basic-example-k7zml)**
 
@@ -88,7 +90,7 @@ Callback to run when dialog instance is closed.
 ##### htmlClassNamespace
 
 Type: `string`  
-Default: ` `
+Default: ``
 
 HTML class namespace in addition to default one (`statua-Dialog`).
 
