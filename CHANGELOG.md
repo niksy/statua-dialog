@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.1.1][] - 2019-12-19
+
 ### Changed
 
 -   Call `onCreate` hook at end
@@ -32,7 +34,8 @@
 
 <!-- prettier-ignore-start -->
 
-[Unreleased]: https://github.com/niksy/statua-dialog/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/niksy/statua-dialog/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/niksy/statua-dialog/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/niksy/statua-dialog/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/niksy/statua-dialog/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/niksy/statua-dialog/tree/v1.0.0

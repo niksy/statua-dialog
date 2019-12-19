@@ -1,6 +1,6 @@
 {
   "name": "@statua/dialog",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Dialog component.",
   "main": "index.cjs.js",
   "module": "index.esm.js",
