@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Call `onCreate` hook at end
+
 ## [1.1.0][] - 2019-12-07
 
 ### Added

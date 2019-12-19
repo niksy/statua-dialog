@@ -68,10 +68,10 @@ export default {
 	oncreate() {
 		const { id, isContentNode, content, onCreate } = this.get();
 		dialogReferenceStack.push([id, this.refs.container]);
-		onCreate();
 		if (isContentNode) {
 			this.refs.dialog.appendChild(content);
 		}
+		onCreate();
 	},
 	ondestroy() {
 		const { id, onDestroy, isComponentActive } = this.get();
