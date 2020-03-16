@@ -102,8 +102,7 @@ Useful if you want to create additional styling/functionality selector hook.
 Type: `boolean`  
 Default: `false`
 
-Option for disabling modal instance close on `Escape` key press, or when modal
-backdrop is clicked.
+Disable modal close on `Escape` key press or when modal backdrop is clicked.
 
 ### instance.show()
 
